@@ -1,16 +1,22 @@
 package AvishayDadon_GuyBenari;
 import javax.swing.*;
 import java.util.*;
+
+import AvishayDadon_GuyBenari.Module.Company;
+import AvishayDadon_GuyBenari.Module.Department;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 
-public class Main extends Application {
+public class Main /*extends Application*/ {
 
     public static void main(String[] args) {
-        launch(args);
+        Company company = new Company("BigCompany");
+        //Department department1 = new Department("firstDepartment", false);
+
+        //launch(args);
     }
 
     public void start(Stage primaryStage) {

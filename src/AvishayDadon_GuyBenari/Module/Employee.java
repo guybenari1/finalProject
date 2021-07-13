@@ -3,31 +3,31 @@ package AvishayDadon_GuyBenari.Module;
 import java.util.Random;
 
 public class Employee implements Synchronizable, DynamicWorkable {
-    public enum Preference {EARLY_START, LATE_START, NO_CHANGE, STAY_HOME}
+    //public enum Preference {EARLY_START, LATE_START, NO_CHANGE, STAY_HOME}
     public enum SalaryType {GLOBAL, HOURS, HOURS_WITH_BONUS}
     private String name;
-    private Role job;
-    private Preference pref;
+    private Role role;
+    private syncType syncType;
     private SalaryType salaryType;
     private int salaryHours;
     private double salaryBase;
     private double hours;
-    private boolean sync;
-    private boolean dWork;
+    //private boolean sync;
+    //private boolean dWork;
 
-    public Employee(String name, Role job, Preference pref, SalaryType salaryType, double salaryBase, int salaryHours) {
+    public Employee(String name, Role job, syncType syncType, SalaryType salaryType, double salaryBase, int salaryHours) {
         this.name = name;
-        this.job = job;
-        this.pref = pref;
+        this.role = job;
+        this.syncType = syncType;
         setSalaryBase(salaryType, salaryBase);
         setSalaryHours(salaryType, salaryHours);
-        setHours(pref);
-        dynamicWork(dWork);
-        synchronize(sync);
+        setHours(syncType);
+        //dynamicWork(dWork);
+        synchronize(syncType);
     }
 
-    private void setHours(Preference pref) {
-        switch (pref){
+    private void setHours(syncType syncType) {
+        switch (syncType){
             case LATE_START:{
                 this.hours=1;
             }
@@ -61,14 +61,14 @@ public class Employee implements Synchronizable, DynamicWorkable {
         }
     }
 
-    public Double getProductive() {
-        if (!job.getdWork()) {
-            if (pref == Preference.NO_CHANGE) {
+    /*public Double getProductive() {
+        if (!role.getdWork()) {
+            if (syncType == syncType.NO_CHANGE) {
                 return hours * 0.2;
             }
         } else {
-            if (job.getSync()) {
-                if (pref.equals(job.getRoleDepartment().getSyncType())) {
+            if (role.getSyncType()) {
+                if (syncType.equals(role.getRoleDepartment().getSyncType())) {
                     return hours * 0.2;
                 } else {
                     return hours * (-0.2);
@@ -76,32 +76,43 @@ public class Employee implements Synchronizable, DynamicWorkable {
             }
         }
         return hours * 0.2;
-    }
+    }*/
 
     public String getName() {
         return name;
     }
 
-    public Preference getPreference() {
-        return pref;
+    public syncType getSyncType() {
+        return syncType;
     }
 
-    public boolean getSync() {
-        return sync;
-    }
+    //public boolean getSync() {
+     //   return sync;
+    //}
 
-    public boolean getdWork() {
-        return dWork;
-    }
+    //public boolean getdWork() {
+     //   return dWork;
+   // }
 
     @Override
     public void dynamicWork(boolean dWork) {
-        dWork = job.getdWork();
+        dWork = role.getdWork();
     }
 
     @Override
-    public void synchronize(boolean sync) {
-        sync = job.getSync();
+    //TO add exep
+    public void synchronize(syncType syncType){
+        if (role.getSyncType() == syncType.NO_SYNC){
+            this.syncType = syncType;
+        }
+        else{
+            if (syncType != role.getSyncType()){
+                System.out.println("ERROR: not equal");
+            }
+            else {
+                this.syncType = role.getSyncType();
+            }
+        }
     }
 
     public boolean equals(Employee other) {
@@ -114,14 +125,14 @@ public class Employee implements Synchronizable, DynamicWorkable {
     public String toString() {
         return "Employee{" +
                 "name='" + name + '\'' +
-                ", job=" + job +
-                ", pref=" + pref +
+                ", role=" + role +
+                ", syncType=" + syncType +
                 ", salaryType=" + salaryType +
                 ", salaryHours=" + salaryHours +
                 ", salaryBase=" + salaryBase +
                 ", hours=" + hours +
-                ", sync=" + sync +
-                ", dWork=" + dWork +
+                //", sync=" + sync +
+                //", dWork=" + dWork +
                 '}';
     }
 }

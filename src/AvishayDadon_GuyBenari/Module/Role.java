@@ -4,20 +4,18 @@ import java.util.ArrayList;
 
 public class Role implements Synchronizable, DynamicWorkable {
     private String name;
-    private Department depo;
+    private Department department;
     private ArrayList<Employee> employees;
-    private boolean sync;
     private boolean dWork;
-    public enum syncType { EARLY_START, LATE_START, NO_CHANGE, STAY_HOME }
     private syncType syncType;
 
-    public Role(String name, Department depo, syncType syncType) {
+    public Role(String name, Department department, syncType syncType, boolean dWork) {
         this.name = name;
-        this.depo = depo;
-        this.syncType = syncType;
+        this.department = department;
+        this.dWork = dWork;
         employees = new ArrayList<Employee>();
         dynamicWork(dWork);
-        synchronize(sync);
+        synchronize(syncType);
     }
     public Double getProductive(){
         double productive=0;
@@ -30,38 +28,51 @@ public class Role implements Synchronizable, DynamicWorkable {
         return name;
     }
     public Department getRoleDepartment() {
-        return depo;
+        return department;
     }
-    public boolean getSync() {
-        return sync;
-    }
+   // public boolean getSync() {
+   //     return sync;
+   // }
     public boolean getdWork() {
         return dWork;
     }
     @Override
     public void dynamicWork(boolean dWork) {
-        dWork = depo.getdWork();
+        dWork = department.getdWork();
     }
     @Override
-    public void synchronize(boolean sync) {
-        sync = depo.getSync();
+    public void synchronize(syncType syncType) {
+        if (department.getSyncType() == syncType.NO_SYNC){
+            this.syncType = syncType;
+        }
+        else{
+            if (syncType != department.getSyncType()){
+                System.out.println("ERROR: not equal");
+            }
+            else {
+                this.syncType = department.getSyncType();
+            }
+        }
     }
     public boolean equals(Role other) {
         if (!(other instanceof Role))
             return false;
         Role temp = other;
-        if (!(name.equals(temp.getName()) || depo.equals(temp.getRoleDepartment())))
+        if (!(name.equals(temp.getName()) || department.equals(temp.getRoleDepartment())))
             return false;
         return true;
+    }
+    public syncType getSyncType() {
+        return syncType;
     }
 
     @Override
     public String toString() {
         return "Role{" +
                 "name='" + name + '\'' +
-                ", depo=" + depo +
+                ", department=" + department +
                 ", employees=" + employees +
-                ", sync=" + sync +
+                //", sync=" + sync +
                 ", dWork=" + dWork +
                 ", syncType=" + syncType +
                 '}';

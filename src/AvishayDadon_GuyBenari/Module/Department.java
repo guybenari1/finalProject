@@ -6,17 +6,15 @@ import java.util.Random;
 public class Department implements Synchronizable, DynamicWorkable {
     private String name;
     private ArrayList<Role> roles;
-    private boolean sync;
     private boolean dWork;
-    public enum syncType { EARLY_START, LATE_START, NO_CHANGE, STAY_HOME }
     private syncType syncType;
 
-    public Department(String name, syncType syncType) {
+    public Department(String name, syncType syncType, boolean dWork) {
         this.name = name;
-        this.syncType=syncType;
+        this.dWork= dWork;
         roles = new ArrayList<Role>();
         dynamicWork(dWork);
-        synchronize(sync);
+        synchronize(syncType);
     }
     public syncType getSyncType() {
         return syncType;
@@ -39,9 +37,9 @@ public class Department implements Synchronizable, DynamicWorkable {
         roles.add(newRole);
         return true;
     }
-    public boolean getSync() {
-        return sync;
-    }
+    //public boolean getSync() {
+       // return sync;
+  //  }
     public boolean getdWork() {
         return dWork;
     }
@@ -51,9 +49,8 @@ public class Department implements Synchronizable, DynamicWorkable {
         dWork = rand.nextBoolean();
     }
     @Override
-    public void synchronize(boolean sync) {
-        Random rand = new Random();
-        sync = rand.nextBoolean();
+    public void synchronize(syncType syncType) {
+        this.syncType = syncType;
     }
     public boolean equals(Department other) {
         if (!(other instanceof Department))
@@ -66,7 +63,7 @@ public class Department implements Synchronizable, DynamicWorkable {
         return "Department{" +
                 "name='" + name + '\'' +
                 ", roles=" + roles +
-                ", sync=" + sync +
+                //", sync=" + sync +
                 ", dWork=" + dWork +
                 ", syncType=" + syncType +
                 '}';
