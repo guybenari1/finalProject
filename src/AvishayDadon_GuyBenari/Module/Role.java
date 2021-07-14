@@ -7,7 +7,7 @@ public class Role implements Synchronizable, DynamicWorkable {
     private Department department;
     private ArrayList<Employee> employees;
     private boolean dWork;
-    private syncType syncType;
+    //private syncType syncType;
 
     public Role(String name, Department department, syncType syncType, boolean dWork) {
         this.name = name;
@@ -17,13 +17,14 @@ public class Role implements Synchronizable, DynamicWorkable {
         dynamicWork(dWork);
         synchronize(syncType);
     }
+    /*
     public Double getProductive(){
         double productive=0;
         for (Employee employee : employees) {
             productive += employee.getProductive();
         }
         return productive;
-    }
+    }*/
     public String getName() {
         return name;
     }

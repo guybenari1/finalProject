@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class Main /*extends Application*/ {
 
     public static void main(String[] args) {
-        Company company = new Company("BigCompany");
+        //Company company = new Company("BigCompany");
         //Department department1 = new Department("firstDepartment", false);
 
         //launch(args);

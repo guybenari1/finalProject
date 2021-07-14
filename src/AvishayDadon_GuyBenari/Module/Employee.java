@@ -11,7 +11,7 @@ public class Employee implements Synchronizable, DynamicWorkable {
     private SalaryType salaryType;
     private int salaryHours;
     private double salaryBase;
-    private double hours;
+    private double hours;//int
     //private boolean sync;
     //private boolean dWork;
 
@@ -100,7 +100,7 @@ public class Employee implements Synchronizable, DynamicWorkable {
     }
 
     @Override
-    //TO add exep
+    //TO add exep, change to bool
     public void synchronize(syncType syncType){
         if (role.getSyncType() == syncType.NO_SYNC){
             this.syncType = syncType;
