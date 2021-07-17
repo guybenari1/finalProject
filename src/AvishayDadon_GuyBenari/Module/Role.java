@@ -1,59 +1,48 @@
 package AvishayDadon_GuyBenari.Module;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Role implements Synchronizable, DynamicWorkable {
     private String name;
     private Department department;
     private ArrayList<Employee> employees;
-    private boolean dWork;
-    //private syncType syncType;
+    private boolean dynamicWork;
+    private boolean sync;
 
-    public Role(String name, Department department, syncType syncType, boolean dWork) {
+    public Role(String name, Department department) {
         this.name = name;
         this.department = department;
-        this.dWork = dWork;
         employees = new ArrayList<Employee>();
-        dynamicWork(dWork);
-        synchronize(syncType);
+        dynamicWorkInter();
+        synchronizeInter();
     }
-    /*
-    public Double getProductive(){
-        double productive=0;
-        for (Employee employee : employees) {
-            productive += employee.getProductive();
-        }
-        return productive;
-    }*/
+
+    public ArrayList<Employee> getEmployees() {
+        return employees;
+    }
     public String getName() {
         return name;
     }
     public Department getRoleDepartment() {
         return department;
     }
-   // public boolean getSync() {
-   //     return sync;
-   // }
-    public boolean getdWork() {
-        return dWork;
+
+    public boolean getSync() {
+        return sync;
+    }
+
+    public boolean getDynamicWork() {
+        return dynamicWork;
     }
     @Override
-    public void dynamicWork(boolean dWork) {
-        dWork = department.getdWork();
+    public void dynamicWorkInter() {
+        Random rand = new Random();
+        this.dynamicWork = department.getDynamicWork()&&rand.nextBoolean();
     }
     @Override
-    public void synchronize(syncType syncType) {
-        if (department.getSyncType() == syncType.NO_SYNC){
-            this.syncType = syncType;
-        }
-        else{
-            if (syncType != department.getSyncType()){
-                System.out.println("ERROR: not equal");
-            }
-            else {
-                this.syncType = department.getSyncType();
-            }
-        }
+    public void synchronizeInter() {
+        this.sync = department.getSync();
     }
     public boolean equals(Role other) {
         if (!(other instanceof Role))
@@ -63,19 +52,6 @@ public class Role implements Synchronizable, DynamicWorkable {
             return false;
         return true;
     }
-    public syncType getSyncType() {
-        return syncType;
-    }
+    //toString
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "name='" + name + '\'' +
-                ", department=" + department +
-                ", employees=" + employees +
-                //", sync=" + sync +
-                ", dWork=" + dWork +
-                ", syncType=" + syncType +
-                '}';
-    }
 }

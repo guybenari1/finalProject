@@ -6,23 +6,27 @@ import java.util.Random;
 public class Department implements Synchronizable, DynamicWorkable {
     private String name;
     private ArrayList<Role> roles;
-    private boolean dWork;
-    private syncType syncType;
+    private boolean dynamicWork;
+    private boolean sync;
 
-    public Department(String name, syncType syncType, boolean dWork) {
+    public Department(String name) {
         this.name = name;
-        this.dWork= dWork;
         roles = new ArrayList<Role>();
-        dynamicWork(dWork);
-        synchronize(syncType);
+        dynamicWorkInter();
+        synchronizeInter();
     }
-    public syncType getSyncType() {
-        return syncType;
+
+    public ArrayList<Role> getRoles() {
+        return roles;
     }
     public Double getProductive(){
-        double productive=0;
-        for (Role role : roles) {
-            productive += role.getProductive();
+        double productive =0;
+        for (Role role : roles){
+            for (int i=0; i<role.getEmployees().size(); i++){
+                if (role.getEmployees().get(i).getProductive() != 1) {
+                    productive += role.getEmployees().get(i).getProductive();
+                }
+            }
         }
         return productive;
     }
@@ -37,35 +41,31 @@ public class Department implements Synchronizable, DynamicWorkable {
         roles.add(newRole);
         return true;
     }
-    //public boolean getSync() {
-       // return sync;
-  //  }
-    public boolean getdWork() {
-        return dWork;
+
+    public boolean getSync() {
+        return sync;
     }
-    @Override
-    public void dynamicWork(boolean dWork) {
-        Random rand = new Random();
-        dWork = rand.nextBoolean();
-    }
-    @Override
-    public void synchronize(syncType syncType) {
-        this.syncType = syncType;
-    }
-    public boolean equals(Department other) {
-        if (!(other instanceof Department))
-            return false;
-        return name.equals(((Department)other).getName());
+
+    public boolean getDynamicWork() {
+        return dynamicWork;
     }
 
     @Override
-    public String toString() {
-        return "Department{" +
-                "name='" + name + '\'' +
-                ", roles=" + roles +
-                //", sync=" + sync +
-                ", dWork=" + dWork +
-                ", syncType=" + syncType +
-                '}';
+    public void dynamicWorkInter() {
+        Random rand = new Random();
+        this.dynamicWork = rand.nextBoolean();
+    }
+
+    @Override
+    public void synchronizeInter() {
+        Random rand = new Random();
+        this.sync = rand.nextBoolean();
+    }
+
+    public boolean equals(Department other) {
+        if (!(other instanceof Department))
+            return false;
+        return name.equals(((Department) other).getName());
     }
 }
+    //toString

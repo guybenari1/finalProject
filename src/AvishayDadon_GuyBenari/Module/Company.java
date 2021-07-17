@@ -4,22 +4,29 @@ import java.util.ArrayList;
 
 public class Company {
     private String name;
-    private ArrayList<Department> allDepo;
+    private ArrayList<Department> allDepartments;
     private ArrayList<Employee> allEmployees;
 
     public Company(String name) {
         this.name = name;
-        allDepo = new ArrayList<Department>();
+        allDepartments = new ArrayList<Department>();
         allEmployees = new ArrayList<Employee>();
     }
     public String getName() {
         return name;
     }
-    public boolean addDepo(Department newDepo) {
-        if (allDepo.contains(newDepo))
+    public boolean addDepartment(Department newDepartment) {
+        if (allDepartments.contains(newDepartment))
             return false;
-        allDepo.add(newDepo);
+        allDepartments.add(newDepartment);
         return true;
+    }
+    public Double getProductive(){
+        double productive =0;
+        for (Department department : allDepartments){
+            productive+=department.getProductive();
+        }
+        return productive;
     }
     public boolean addEmployee(Employee newEmployee) {
         if (allEmployees.contains(newEmployee))
@@ -33,13 +40,7 @@ public class Company {
         return name.equals(((Company)other).getName());
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "name='" + name + '\'' +
-                ", allDepo=" + allDepo +
-                ", allEmployees=" + allEmployees +
-                '}';
-    }
+    //toString
+
 }
 
