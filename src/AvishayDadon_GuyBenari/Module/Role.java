@@ -16,6 +16,7 @@ public class Role implements Synchronizable, DynamicWorkable {
         employees = new ArrayList<Employee>();
         dynamicWorkInter();
         synchronizeInter();
+        department.addRole(this);
     }
 
     public ArrayList<Employee> getEmployees() {
@@ -35,10 +36,16 @@ public class Role implements Synchronizable, DynamicWorkable {
     public boolean getDynamicWork() {
         return dynamicWork;
     }
+    public boolean addEmployee(Employee newEmployee) {
+        if (employees.contains(newEmployee))
+            return false;
+        employees.add(newEmployee);
+        return true;
+    }
     @Override
     public void dynamicWorkInter() {
         Random rand = new Random();
-        this.dynamicWork = department.getDynamicWork()&&rand.nextBoolean();
+        this.dynamicWork = (department.getDynamicWork()) && (rand.nextBoolean());
     }
     @Override
     public void synchronizeInter() {

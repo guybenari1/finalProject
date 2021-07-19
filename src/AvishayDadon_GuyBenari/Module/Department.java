@@ -5,15 +5,18 @@ import java.util.Random;
 
 public class Department implements Synchronizable, DynamicWorkable {
     private String name;
+    private Company company;
     private ArrayList<Role> roles;
     private boolean dynamicWork;
     private boolean sync;
 
-    public Department(String name) {
+    public Department(String name, Company company) {
         this.name = name;
+        this.company=company;
         roles = new ArrayList<Role>();
         dynamicWorkInter();
         synchronizeInter();
+        company.addDepartment(this);
     }
 
     public ArrayList<Role> getRoles() {
@@ -24,7 +27,7 @@ public class Department implements Synchronizable, DynamicWorkable {
         for (Role role : roles){
             for (int i=0; i<role.getEmployees().size(); i++){
                 if (role.getEmployees().get(i).getProductive() != 1) {
-                    productive += role.getEmployees().get(i).getProductive();
+                    productive += role.getEmployees().get(i).getProfit();
                 }
             }
         }
@@ -62,6 +65,7 @@ public class Department implements Synchronizable, DynamicWorkable {
         this.sync = rand.nextBoolean();
     }
 
+    //fix with company
     public boolean equals(Department other) {
         if (!(other instanceof Department))
             return false;
