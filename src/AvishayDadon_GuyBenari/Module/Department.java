@@ -22,7 +22,7 @@ public class Department implements Synchronizable, DynamicWorkable {
     public ArrayList<Role> getRoles() {
         return roles;
     }
-    public Double getProductive(){
+    public double getProductive(){
         double productive =0;
         for (Role role : roles){
             for (int i=0; i<role.getEmployees().size(); i++){
@@ -31,7 +31,7 @@ public class Department implements Synchronizable, DynamicWorkable {
                 }
             }
         }
-        return productive;
+        return (double) Math.round(productive * 100) / 100;
     }
 
     public String getName() {

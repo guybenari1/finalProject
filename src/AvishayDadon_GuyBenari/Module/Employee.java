@@ -86,31 +86,30 @@ public class Employee implements Synchronizable, DynamicWorkable {
     }
 
     public Double getProductive() {
-        double productive = 1;
         if (role.getDynamicWork()){
             if (role.getSync()){
                 if (pref == role.getEmployees().get(0).getPref()){
                     if (pref == Preference.STAY_HOME){
-                        productive = 0.1;
+                        return 0.1;
                     }
                     else {
-                        productive = 0.2;
+                        return 0.2;
                     }
                 }
                 else {
-                    productive = (-0.2);
+                    return (-0.2);
                 }
             }
             else {
                 if (pref == Preference.STAY_HOME) {
-                    productive = 0.1;
+                    return 0.1;
                 }
                 else {
-                    productive = 0.2;
+                    return 0.2;
                 }
             }
         }
-        return productive;
+        return 1.0;
     }
 
     public double getProfit(){
